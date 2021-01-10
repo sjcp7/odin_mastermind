@@ -19,19 +19,33 @@ module Display
     }[peg]
   end
 
-  def display_player_prompt(turn = nil)
-    puts "Turn #{turn}" unless turn.nil?
-    puts "Type your guess (only 4 numbers, 1-6 each):"
+  def display_game_messages(message)
+    {
+      greet: "Hi, welcome to Mastermind!",
+      game_option: "Type '1' to be the Code Breaker or '2' to be the Code Maker: ",
+      endgame: "Thank you for playing! See ya!",
+      human_breaker_won: "Congratulations! You broke the code!",
+      human_maker_won: "Impressive! You tricked the computer!",
+      computer_breaker_won: "Too bad! The computer broke your code.",
+      computer_maker_won: "Good effort, but you couldn't decipher the code.",
+      code: "Here's the code you were trying to break: "
+    }[message]
+  end
+  
+  def display_turn_messages(message, turn = nil)
+    {
+      guess_prompt: "Turn #{turn} - Type your guess (4 numbers, 1-6 each): ",
+      computer_turn: "Computer Turn #{turn}",
+      human_code_prompt: "Type a secret code for the computer to decipher (4 numbers, 1-6 each): "
+    }[message]
   end
 
-  def display_show_input_error(option)
-    if option == :size
-      puts "The guess must be 4 numbers long."
-      display_player_prompt
-    elsif option == :range
-      puts "Each number must be between 1-6."
-      display_player_prompt
-    end
+  def display_warnings(warning) 
+    {
+      game_mode_error: "Please, type '1' to be the Code Breaker or '2' to be the Code Maker: ".red,
+      guess_error: "Your guess must be 4 numbers, 1-6 each.".red,
+      human_code_error: "The secret code must be 4 numbers, 1-6 each.".red
+    }[warning]
   end
 
   def display_show_hints(exact, number_only)
@@ -46,13 +60,4 @@ module Display
   def display_show_code(code)
     code.each { |num| print code_colors(num) }
   end
-
-  def display_human_win
-    puts "Well done! you broke the code!"
-  end
-  
-  def display_computer_win
-    puts "Not today! The computer wins!"
-  end
 end
-

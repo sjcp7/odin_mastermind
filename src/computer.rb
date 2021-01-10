@@ -15,30 +15,26 @@ class Computer
   private
 
   def get_human_code
+    print display_turn_messages(:human_code_prompt)
     code = gets.chomp.split('').map(&:to_i)
-    unless code.size == 4
-      display_show_input_error(:size)
-      get_human_code
-    end
-
-    unless code.all? { |num| num.between?(1, 6) }
-      display_show_input_error(:range)
-      get_human_code
-    end
-    code
+    return code if code.size == 4 && code.all? { |num| num.between?(1, 6) }
+    puts display_warnings(:human_code_error)
+    get_human_code
   end
 
   def play_turns
+    system('clear')
     turn = 1
     code_set = initialize_code_set
     @guess = [1, 1, 2, 2]
-    turn_result
+    turn_result(turn)
     return nil if code_broken?(@guess, @human_code)
     remove_unmatching_codes(@guess, code_set)
+    turn += 1
+
     while turn <= 12 do
       @guess = code_set.first
-      turn_result
-      sleep(1)
+      turn_result(turn)
       break if code_broken?(@guess, @human_code)
       remove_unmatching_codes(@guess, code_set)
       turn += 1
@@ -59,10 +55,12 @@ class Computer
     set
   end
 
-  def turn_result
+  def turn_result(turn)
+    puts display_turn_messages(:computer_turn, turn)
     compare(@guess, @human_code)
     display_show_code(@guess)
     display_show_hints(@exact_matches, @right_numbers)
+    sleep(1)
   end
 
   def remove_unmatching_codes(guess, code_set)
@@ -79,10 +77,13 @@ class Computer
   end
 
   def conclusion
-    if code_broken?(@guess, @computer_code)
-      display_computer_win
+    if code_broken?(@guess, @human_code)
+      puts display_game_messages(:computer_breaker_won)
     else
-      display_human_win
+      puts display_game_messages(:human_maker_won)
     end
   end
 end
+
+computer = Computer.new
+computer.start_breaking

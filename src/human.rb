@@ -6,8 +6,7 @@ class Human
   include Display
   include GameLogic
   def initialize
-    random_numbers = [rand(1..6), rand(1..6), rand(1..6), rand(1..6)]
-    @computer_code = random_numbers.map(&:to_s)
+    @computer_code = [rand(1..6), rand(1..6), rand(1..6), rand(1..6)]
   end
 
   def start_breaking
@@ -20,8 +19,7 @@ class Human
   def play_turns
     turn = 1
     while turn <= 12 do
-      display_player_prompt(turn)
-      @guess = get_player_guess
+      @guess = get_player_guess(turn)
       display_show_code(@guess)
       turn_result
       break if code_broken?(@guess, @computer_code)
@@ -29,19 +27,12 @@ class Human
     end
   end
 
-  def get_player_guess
-    guess = gets.chomp.split('')
-
-    unless guess.size == 4
-      display_show_input_error(:size)
-      get_player_guess
-    end
-
-    unless guess.all? { |char| char.to_i.between?(1, 6)}
-      display_show_input_error(:range)
-      get_player_guess
-    end
-    guess
+  def get_player_guess(turn)
+    print display_turn_messages(:guess_prompt, turn)
+    guess = gets.chomp.split('').map(&:to_i)
+    return guess if guess.size == 4 && guess.all? { |num| num.between?(1, 6) }
+    puts display_warnings(:guess_error)
+    get_player_guess(turn)
   end
 
   def turn_result
@@ -51,9 +42,11 @@ class Human
 
   def conclusion
     if code_broken?(@guess, @computer_code)
-      display_human_win
+      puts display_game_messages(:human_breaker_won)
     else
-      display_computer_win
+      puts display_game_messages(:computer_maker_won)
+      puts display_game_messages(:code)
+      display_show_code(@computer_code)
     end
   end
 end
