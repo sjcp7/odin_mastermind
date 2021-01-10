@@ -40,6 +40,7 @@ module Display
     number_only.times { print key_pegs(:number_only) }
     print ')'
     puts ''
+    puts ''
   end
 
   def display_show_code(code)
