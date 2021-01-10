@@ -84,6 +84,3 @@ class Computer
     end
   end
 end
-
-computer = Computer.new
-computer.start_breaking
