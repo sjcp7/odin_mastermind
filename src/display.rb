@@ -3,12 +3,12 @@ require_relative 'colors'
 module Display
   def code_colors(num)
     {
-      '1' => '  1  '.bg_blue,
-      '2' => '  2  '.bg_red,
-      '3' => '  3  '.bg_green,
-      '4' => '  4  '.bg_brown,
-      '5' => '  5  '.bg_magenta,
-      '6' => '  6  '.bg_cyan
+      1 => '  1  '.bg_blue,
+      2 => '  2  '.bg_red,
+      3 => '  3  '.bg_green,
+      4 => '  4  '.bg_brown,
+      5 => '  5  '.bg_magenta,
+      6 => '  6  '.bg_cyan
     }[num]
   end
 
