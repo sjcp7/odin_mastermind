@@ -28,7 +28,8 @@ module Display
       human_maker_won: "Impressive! You tricked the computer!",
       computer_breaker_won: "Too bad! The computer broke your code.",
       computer_maker_won: "Good effort, but you couldn't decipher the code.",
-      code: "Here's the code you were trying to break: "
+      code: "Here's the code you were trying to break: ",
+      play_again: "Do you want to play again? [y/n]: "
     }[message]
   end
   
