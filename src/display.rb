@@ -22,7 +22,7 @@ module Display
   def display_game_messages(message)
     {
       greet: "Hi, welcome to Mastermind!",
-      game_option: "Type '1' to be the Code Breaker or '2' to be the Code Maker: ",
+      game_option: "Type '1' to be the Code Breaker, '2' to be the Code Maker or 'q' to quit: ",
       endgame: "Thank you for playing! See ya!",
       human_breaker_won: "Congratulations! You broke the code!",
       human_maker_won: "Impressive! You tricked the computer!",
@@ -34,7 +34,7 @@ module Display
   
   def display_turn_messages(message, turn = nil)
     {
-      guess_prompt: "Turn #{turn} - Type your guess (4 numbers, 1-6 each): ",
+      guess_prompt: "Turn #{turn} - Type your guess or 'q' to quit (4 numbers, 1-6 each): ",
       computer_turn: "Computer Turn #{turn}",
       human_code_prompt: "Type a secret code for the computer to decipher (4 numbers, 1-6 each): "
     }[message]

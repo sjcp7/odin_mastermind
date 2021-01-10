@@ -12,14 +12,16 @@ class Game
     game_mode = get_game_mode
     if game_mode == '1'
       code_breaker
-    else
+    elsif game_mode == '2'
       code_maker
+    else
+      puts display_game_messages(:endgame)
     end
   end
 
   def get_game_mode
     game_mode = gets.chomp
-    return game_mode if game_mode == '1' || game_mode == '2'
+    return game_mode if game_mode == '1' || game_mode == '2' || game_mode == 'q'
     print display_warnings(:game_mode_error)
     get_game_mode
   end

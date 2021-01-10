@@ -20,6 +20,7 @@ class Human
     turn = 1
     while turn <= 12 do
       @guess = get_player_guess(turn)
+      break if @guess == 'q'
       display_show_code(@guess)
       turn_result
       break if code_broken?(@guess, @computer_code)
@@ -29,8 +30,10 @@ class Human
 
   def get_player_guess(turn)
     print display_turn_messages(:guess_prompt, turn)
-    guess = gets.chomp.split('').map(&:to_i)
-    return guess if guess.size == 4 && guess.all? { |num| num.between?(1, 6) }
+    guess = gets.chomp
+    return guess if guess == 'q'
+    guess = guess.split('').map(&:to_i)
+    return guess.size == 4 && guess.all? { |num| num.between?(1, 6) }
     puts display_warnings(:guess_error)
     get_player_guess(turn)
   end
